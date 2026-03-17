@@ -6,47 +6,50 @@
 <title>BLACK CLOUD</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-font-family:system-ui;
-background:#0b0b0f;
+background:#07070a;
+font-family:-apple-system,system-ui;
 color:white;
 }
 
+/* HEADER */
 header{
-position:sticky;
-top:0;
-background:#0b0b0f;
-padding:16px;
+padding:18px;
+font-size:22px;
 font-weight:700;
-font-size:20px;
-display:flex;
-justify-content:space-between;
 }
 
+/* SEARCH */
 .search{
-margin:10px 16px;
-padding:12px;
-background:#15151c;
-border-radius:12px;
+margin:0 16px 10px;
+padding:14px;
+border-radius:14px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
 color:#aaa;
 }
 
+/* CATEGORIES */
 .categories{
 display:flex;
 gap:10px;
-overflow:auto;
 padding:10px 16px;
+overflow:auto;
 }
-
 .categories button{
-background:#15151c;
+background:rgba(255,255,255,0.05);
 border:none;
-color:white;
+color:#ccc;
 padding:8px 14px;
 border-radius:20px;
 }
+.categories button.active{
+background:white;
+color:black;
+}
 
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
@@ -54,87 +57,117 @@ gap:14px;
 padding:16px;
 }
 
+/* CARD */
 .card{
-background:linear-gradient(145deg,#15151c,#0d0d13);
-border-radius:16px;
-padding:12px;
+border-radius:20px;
+padding:14px;
+background:linear-gradient(145deg,#111,#0a0a0f);
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+position:relative;
+overflow:hidden;
 }
 
+/* GLOW */
+.card::after{
+content:'';
+position:absolute;
+width:200%;
+height:200%;
+background:radial-gradient(circle,rgba(255,122,24,0.15),transparent 60%);
+top:-50%;
+left:-50%;
+}
+
+/* IMAGE */
 .img{
-height:120px;
-border-radius:12px;
-background:linear-gradient(135deg,#ff7a18,#32d2aa);
+height:140px;
+border-radius:14px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:12px;
+font-weight:700;
+background:linear-gradient(135deg,#ff7a18,#32d2aa);
 }
 
-.title{margin-top:8px;font-size:14px}
+/* TEXT */
+.title{margin-top:10px;font-size:15px}
 .meta{font-size:12px;color:#aaa}
-.price{font-size:18px;font-weight:700;margin-top:6px}
+.price{font-size:20px;font-weight:700;margin-top:6px}
 
+/* SELECT */
 select{
+margin-top:8px;
 width:100%;
-margin-top:6px;
-padding:8px;
-border-radius:8px;
+padding:10px;
+border-radius:10px;
 border:none;
 background:#1a1a22;
 color:white;
 }
 
-button{
-margin-top:8px;
-width:100%;
-padding:10px;
+/* BUTTON */
+button.buy{
+margin-top:10px;
+padding:12px;
 border:none;
-border-radius:10px;
-background:#2f7cff;
+border-radius:12px;
+background:linear-gradient(135deg,#2f7cff,#6fa8ff);
 color:white;
-font-weight:600;
+font-weight:700;
 }
 
+/* CART FLOAT */
 .cart{
 position:fixed;
 bottom:20px;
 right:20px;
-background:#2f7cff;
-padding:14px;
+background:linear-gradient(135deg,#2f7cff,#6fa8ff);
+padding:16px;
 border-radius:50px;
+font-weight:700;
+box-shadow:0 10px 25px rgba(0,0,0,0.6);
 }
 
-.roulette{
-margin:16px;
-padding:20px;
-background:#15151c;
-border-radius:16px;
-text-align:center;
-}
-
+/* MODAL */
 .modal{
 position:fixed;
 top:0;left:0;right:0;bottom:0;
 background:rgba(0,0,0,0.7);
 display:none;
-align-items:center;
-justify-content:center;
+align-items:flex-end;
 }
-
 .modalbox{
-background:#111;
+width:100%;
+background:#0f0f15;
 padding:20px;
-border-radius:14px;
-width:90%;
+border-radius:20px 20px 0 0;
 }
 
+/* INPUT */
 input{
 width:100%;
-padding:10px;
+padding:12px;
 margin:6px 0;
-border-radius:8px;
+border-radius:10px;
 border:none;
 background:#1a1a22;
+color:white;
+}
+
+/* ROULETTE */
+.roulette{
+margin:16px;
+padding:20px;
+border-radius:18px;
+background:linear-gradient(145deg,#111,#0a0a0f);
+text-align:center;
+}
+.spin{
+margin-top:10px;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#2f7cff;
 color:white;
 }
 </style>
@@ -142,36 +175,33 @@ color:white;
 
 <body>
 
-<header>
-BLACK CLOUD
-</header>
+<header>BLACK CLOUD</header>
 
-<div class="search">Поиск вкуса...</div>
+<div class="search">🔍 Поиск вкуса...</div>
 
 <div class="categories">
-<button onclick="scrollToCat('all')">Все</button>
-<button onclick="scrollToCat('vape')">Одноразки</button>
-<button onclick="scrollToCat('liq')">Жидкости</button>
+<button class="active">Все</button>
+<button>Одноразки</button>
+<button>Жидкости</button>
+<button>POD</button>
 </div>
 
 <div class="grid" id="products"></div>
 
 <div class="roulette">
 <h3>🎰 Рулетка</h3>
-<button onclick="spin()">Крутить</button>
+<button class="spin" onclick="spin()">Крутить</button>
 <div id="win"></div>
 </div>
 
-<div class="cart" onclick="openCart()">
-🛒 <span id="count">0</span>
-</div>
+<div class="cart" onclick="openCart()">🛒 <span id="count">0</span></div>
 
 <div class="modal" id="cartModal">
 <div class="modalbox">
 <h3>Корзина</h3>
 <div id="cartItems"></div>
 <p id="total"></p>
-<button onclick="checkout()">Оформить</button>
+<button class="buy" onclick="checkout()">Оформить</button>
 </div>
 </div>
 
@@ -181,19 +211,18 @@ BLACK CLOUD
 <input placeholder="Имя">
 <input placeholder="Телефон">
 <input placeholder="Адрес">
-<button onclick="sendOrder()">Отправить</button>
+<button class="buy">Отправить</button>
 </div>
 </div>
 
 <script>
+const data=[
+{name:'Vapengo 6000',puff:'6000 PUFF',str:'5%',price:700,flavors:['Манго','Арбуз','Клубника']},
+{name:'ELF BAR 5000',puff:'5000 PUFF',str:'5%',price:800,flavors:['Черника','Мята','Виноград']},
+{name:'BRZG 30ml',puff:'Жидкость',str:'20mg',price:400,flavors:['Крем-сода','Бураттино','Малина']}
+]
 
-const data = [
-{cat:'vape',name:'Vapengo 6000',puff:'6000 PUFF',str:'5%',price:700,flavors:['Манго','Клубника','Арбуз']},
-{cat:'vape',name:'ELF BAR 5000',puff:'5000 PUFF',str:'5%',price:800,flavors:['Черника','Мята','Виноград']},
-{cat:'liq',name:'BRZG 30ml',puff:'Жидкость',str:'20mg',price:400,flavors:['Крем-сода','Бураттино','Малина']}
-];
-
-const grid = document.getElementById('products');
+const grid=document.getElementById('products')
 
 data.forEach(p=>{
 const el=document.createElement('div')
@@ -202,24 +231,22 @@ el.innerHTML=`
 <div class="img">${p.name}</div>
 <div class="title">${p.name}</div>
 <div class="meta">${p.puff} • ${p.str}</div>
-<select>
-${p.flavors.map(f=>`<option>${f}</option>`).join('')}
-</select>
+<select>${p.flavors.map(f=>`<option>${f}</option>`).join('')}</select>
 <div class="price">${p.price} ₽</div>
-<button onclick="add('${p.name}',this.previousElementSibling.value,${p.price})">Добавить</button>
+<button class="buy" onclick="add('${p.name}',this.previousElementSibling.value,${p.price})">Добавить</button>
 `
 grid.appendChild(el)
 })
 
 let cart=[]
+
 function add(name,flavor,price){
 cart.push({name,flavor,price})
 document.getElementById('count').innerText=cart.length
 }
 
 function openCart(){
-let html=''
-let sum=0
+let html='',sum=0
 cart.forEach(i=>{
 html+=`${i.name} (${i.flavor}) - ${i.price}₽<br>`
 sum+=i.price
@@ -234,19 +261,10 @@ document.getElementById('cartModal').style.display='none'
 document.getElementById('orderModal').style.display='flex'
 }
 
-function sendOrder(){
-alert('Заказ отправлен в Telegram')
-}
-
 function spin(){
 const prizes=['10%','20%','Бесплатка','Промокод','Ничего']
-document.getElementById('win').innerText='Вы выиграли: '+prizes[Math.floor(Math.random()*prizes.length)]
+document.getElementById('win').innerText='Выигрыш: '+prizes[Math.floor(Math.random()*prizes.length)]
 }
-
-function scrollToCat(c){
-window.scrollTo({top:0,behavior:'smooth'})
-}
-
 </script>
 
 </body>
