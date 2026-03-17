@@ -12,30 +12,31 @@ body{
 font-family:-apple-system,BlinkMacSystemFont;
 background:#000;
 color:white;
+overflow-x:hidden;
 }
 
-/* HEADER */
-header{
-position:sticky;
+/* NAVBAR */
+.nav{
+position:fixed;
 top:0;
-padding:16px;
-font-size:20px;
-font-weight:700;
-background:rgba(0,0,0,0.6);
+width:100%;
+padding:14px;
+background:rgba(0,0,0,0.7);
 backdrop-filter:blur(20px);
+font-weight:700;
+z-index:10;
 }
 
 /* SEARCH */
 .search{
-margin:10px 16px;
+margin:60px 16px 10px;
 padding:14px;
 border-radius:16px;
 background:rgba(255,255,255,0.06);
-backdrop-filter:blur(10px);
 color:#aaa;
 }
 
-/* CATEGORY PILLS */
+/* CATEGORY SCROLL */
 .categories{
 display:flex;
 gap:10px;
@@ -46,12 +47,12 @@ padding:10px 16px;
 border:none;
 padding:8px 16px;
 border-radius:20px;
-background:rgba(255,255,255,0.08);
-color:#ccc;
+background:#111;
+color:#aaa;
 }
 .categories .active{
-background:white;
-color:black;
+background:#fff;
+color:#000;
 }
 
 /* GRID */
@@ -64,16 +65,12 @@ padding:16px;
 
 /* CARD */
 .card{
+background:#0c0c10;
 border-radius:22px;
 padding:14px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
-box-shadow:0 10px 30px rgba(0,0,0,0.6);
 transition:0.2s;
 }
-.card:active{
-transform:scale(0.97);
-}
+.card:active{transform:scale(0.95)}
 
 /* IMAGE */
 .img{
@@ -87,42 +84,31 @@ font-weight:700;
 }
 
 /* TEXT */
-.title{margin-top:10px;font-size:15px}
+.title{margin-top:10px}
 .meta{font-size:12px;color:#aaa}
-.price{font-size:20px;font-weight:700;margin-top:6px}
+.price{font-size:18px;font-weight:700;margin-top:6px}
 
 /* SELECT */
 select{
-margin-top:8px;
 width:100%;
+margin-top:6px;
 padding:10px;
 border-radius:12px;
-border:none;
 background:#1a1a22;
+border:none;
 color:white;
 }
 
 /* BUTTON */
 button.buy{
 margin-top:10px;
+width:100%;
 padding:12px;
-border:none;
 border-radius:14px;
+border:none;
 background:#0a84ff;
 color:white;
 font-weight:700;
-}
-
-/* CART BUTTON */
-.cart{
-position:fixed;
-bottom:80px;
-right:20px;
-background:#0a84ff;
-padding:16px;
-border-radius:50%;
-font-weight:700;
-box-shadow:0 10px 25px rgba(0,0,0,0.6);
 }
 
 /* TAB BAR */
@@ -130,8 +116,7 @@ box-shadow:0 10px 25px rgba(0,0,0,0.6);
 position:fixed;
 bottom:0;
 width:100%;
-background:rgba(0,0,0,0.8);
-backdrop-filter:blur(20px);
+background:#111;
 display:flex;
 justify-content:space-around;
 padding:10px 0;
@@ -141,33 +126,28 @@ font-size:12px;
 color:#aaa;
 text-align:center;
 }
-.tabbar .active{
-color:#0a84ff;
-}
+.tabbar .active{color:#0a84ff}
 
-/* MODAL */
-.modal{
-position:fixed;
-top:0;left:0;right:0;bottom:0;
-background:rgba(0,0,0,0.6);
-display:none;
-align-items:flex-end;
-}
+/* SHEET */
 .sheet{
+position:fixed;
+bottom:-100%;
+left:0;
 width:100%;
 background:#111;
 border-radius:24px 24px 0 0;
 padding:20px;
+transition:0.3s;
 }
+.sheet.active{bottom:0}
 
-/* INPUT */
 input{
 width:100%;
 padding:12px;
 margin:6px 0;
 border-radius:12px;
-border:none;
 background:#1a1a22;
+border:none;
 color:white;
 }
 </style>
@@ -175,7 +155,7 @@ color:white;
 
 <body>
 
-<header>BLACK CLOUD</header>
+<div class="nav">BLACK CLOUD</div>
 
 <div class="search">🔍 Поиск вкуса...</div>
 
@@ -188,35 +168,31 @@ color:white;
 
 <div class="grid" id="products"></div>
 
-<div class="cart" onclick="openCart()">🛒</div>
-
-<div class="modal" id="cartModal">
-<div class="sheet">
+<!-- CART SHEET -->
+<div class="sheet" id="cartSheet">
 <h3>Корзина</h3>
 <div id="cartItems"></div>
 <p id="total"></p>
-<button class="buy" onclick="checkout()">Оформить</button>
-</div>
+<button class="buy" onclick="openOrder()">Оформить</button>
 </div>
 
-<div class="modal" id="orderModal">
-<div class="sheet">
+<!-- ORDER SHEET -->
+<div class="sheet" id="orderSheet">
 <h3>Оформление</h3>
 <input placeholder="Имя">
 <input placeholder="Телефон">
 <input placeholder="Адрес">
 <button class="buy">Отправить</button>
 </div>
-</div>
 
+<!-- TAB BAR -->
 <div class="tabbar">
 <div class="active">🏠<br>Главная</div>
 <div>🔍<br>Поиск</div>
-<div>🛒<br>Корзина</div>
+<div onclick="openCart()">🛒<br>Корзина</div>
 </div>
 
 <script>
-
 const data=[
 {name:'Vapengo 6000',puff:'6000 PUFF',str:'5%',price:700,flavors:['Манго','Арбуз','Клубника']},
 {name:'ELF BAR 5000',puff:'5000 PUFF',str:'5%',price:800,flavors:['Черника','Мята','Виноград']},
@@ -253,15 +229,14 @@ sum+=i.price
 })
 document.getElementById('cartItems').innerHTML=html
 document.getElementById('total').innerText='Итого: '+sum+'₽'
-document.getElementById('cartModal').style.display='flex'
+document.getElementById('cartSheet').classList.add('active')
 }
 
-function checkout(){
-document.getElementById('cartModal').style.display='none'
-document.getElementById('orderModal').style.display='flex'
+function openOrder(){
+document.getElementById('cartSheet').classList.remove('active')
+document.getElementById('orderSheet').classList.add('active')
 }
-
 </script>
 
 </body>
-</html>
+  </html>
