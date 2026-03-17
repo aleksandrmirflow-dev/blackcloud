@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLACK CLOUD</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:-apple-system;
+background:#000;
+color:white;
+}
+
+/* NAV */
+.nav{
+position:fixed;
+top:0;
+width:100%;
+padding:14px;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(20px);
+font-weight:700;
+z-index:10;
+}
+
+/* SEARCH */
+.search{
+margin:60px 16px 10px;
+padding:14px;
+border-radius:16px;
+background:#111;
+color:#aaa;
+}
+
+/* CATEGORY */
+.categories{
+display:flex;
+gap:10px;
+overflow:auto;
+padding:10px 16px;
+}
+.categories button{
+border:none;
+padding:8px 16px;
+border-radius:20px;
+background:#111;
+color:#aaa;
+}
+.categories .active{
+background:white;
+color:black;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+padding:16px;
+}
+
+/* CARD */
+.card{
+background:#0c0c10;
+border-radius:20px;
+padding:10px;
+transition:0.2s;
+}
+.card:active{transform:scale(0.96)}
+
+.card img{
+width:100%;
+height:130px;
+object-fit:contain;
+}
+
+/* TEXT */
+.title{margin-top:6px;font-size:14px}
+.meta{font-size:12px;color:#aaa}
+.price{font-size:18px;font-weight:700}
+
+/* SELECT */
+select{
+width:100%;
+margin-top:6px;
+padding:8px;
+border-radius:10px;
+background:#1a1a22;
+border:none;
+color:white;
+}
+
+/* BUTTON */
+.buy{
+margin-top:8px;
+padding:10px;
+width:100%;
+border:none;
+border-radius:12px;
+background:#0a84ff;
+color:white;
+}
+
+/* TABBAR */
+.tabbar{
+position:fixed;
+bottom:0;
+width:100%;
+background:#111;
+display:flex;
+justify-content:space-around;
+padding:10px 0;
+}
+
+/* SHEETS */
+.sheet{
+position:fixed;
+bottom:-100%;
+width:100%;
+background:#111;
+border-radius:20px 20px 0 0;
+padding:20px;
+transition:0.3s;
+}
+.sheet.active{bottom:0}
+
+input{
+width:100%;
+padding:10px;
+margin:5px 0;
+border-radius:10px;
+border:none;
+background:#1a1a22;
+color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="nav">BLACK CLOUD</div>
+
+<input class="search" id="search" placeholder="🔍 Поиск вкуса..." oninput="render()">
+
+<div class="categories">
+<button onclick="setCat('all')" class="active">Все</button>
+<button onclick="setCat('vape')">Одноразки</button>
+<button onclick="setCat('liq')">Жидкости</button>
+</div>
+
+<div class="grid" id="products"></div>
+
+<div class="sheet" id="cartSheet">
+<h3>Корзина</h3>
+<div id="cartItems"></div>
+<p id="total"></p>
+<button class="buy" onclick="openOrder()">Оформить</button>
+</div>
+
+<div class="sheet" id="orderSheet">
+<h3>Оформление</h3>
+<input id="name" placeholder="Имя">
+<input id="phone" placeholder="Телефон">
+<input id="addr" placeholder="Адрес">
+<button class="buy" onclick="sendOrder()">Отправить</button>
+</div>
+
+<div class="tabbar">
+<div>🏠</div>
+<div onclick="openCart()">🛒</div>
+</div>
+
+<script>
+
+let category='all'
+
+const data=[
+{name:'Vapengo 6000',cat:'vape',price:700,img:'https://i.imgur.com/8Km9tLL.png',flavors:['Манго','Арбуз','Клубника']},
+{name:'ELF BAR 5000',cat:'vape',price:800,img:'https://i.imgur.com/T8bVfKZ.png',flavors:['Черника','Мята','Виноград']},
+{name:'HQD 4000',cat:'vape',price:600,img:'https://i.imgur.com/qIufhof.png',flavors:['Персик','Лёд','Ягоды']},
+{name:'BRZG 30ml',cat:'liq',price:400,img:'https://i.imgur.com/dM7Thhn.png',flavors:['Кола','Малина','Крем']},
+{name:'Skala 30ml',cat:'liq',price:350,img:'https://i.imgur.com/dM7Thhn.png',flavors:['Манго','Лимон','Вишня']}
+]
+
+let cart=[]
+
+function setCat(c){
+category=c
+render()
+}
+
+function render(){
+const s=document.getElementById('search').value.toLowerCase()
+const grid=document.getElementById('products')
+grid.innerHTML=''
+
+data
+.filter(p=>(category=='all'||p.cat==category)&&p.name.toLowerCase().includes(s))
+.forEach(p=>{
+let el=document.createElement('div')
+el.className='card'
+el.innerHTML=`
+<img src="${p.img}">
+<div class="title">${p.name}</div>
+<select>${p.flavors.map(f=>`<option>${f}</option>`).join('')}</select>
+<div class="price">${p.price} ₽</div>
+<button class="buy" onclick="add('${p.name}',this.previousElementSibling.value,${p.price})">Добавить</button>
+`
+grid.appendChild(el)
+})
+}
+
+render()
+
+function add(name,flavor,price){
+cart.push({name,flavor,price})
+}
+
+function openCart(){
+let html='',sum=0
+cart.forEach(i=>{
+html+=`${i.name} (${i.flavor}) - ${i.price}₽<br>`
+sum+=i.price
+})
+document.getElementById('cartItems').innerHTML=html
+document.getElementById('total').innerText='Итого: '+sum+'₽'
+document.getElementById('cartSheet').classList.add('active')
+}
+
+function openOrder(){
+document.getElementById('cartSheet').classList.remove('active')
+document.getElementById('orderSheet').classList.add('active')
+}
+
+function sendOrder(){
+let text='Новый заказ:%0A'
+cart.forEach(i=>{
+text+=`${i.name} (${i.flavor}) - ${i.price}₽%0A`
+})
+text+=`Имя: ${name.value}%0AТелефон: ${phone.value}%0AАдрес: ${addr.value}`
+
+window.open(`https://t.me/YOUR_BOT?text=${text}`)
+}
+</script>
+
+</body>
+  </html>
