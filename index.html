@@ -1,246 +1,164 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BLACK CLOUD</title>
-
-<style>
+<title>BLACK CLOUD</title><style>
 body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont;
-background: radial-gradient(circle at top,#1a1a2e,#0b0b12);
-color:#fff;
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  background:#0c0c0f;
+  color:#fff;
 }
 
-.header{
-padding:20px;
-font-size:24px;
-font-weight:700;
+.container{
+  padding:16px;
 }
 
 .search{
-margin:0 15px 15px;
-padding:12px;
-border-radius:12px;
-background:#1c1c2b;
-border:none;
-color:#aaa;
-width:calc(100% - 30px);
+  background:rgba(255,255,255,0.08);
+  padding:14px;
+  border-radius:16px;
+  color:#aaa;
+  margin-bottom:16px;
 }
 
 .tabs{
-display:flex;
-gap:10px;
-overflow:auto;
-padding:0 15px 15px;
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  margin-bottom:16px;
 }
 
 .tab{
-padding:8px 14px;
-background:#1c1c2b;
-border-radius:20px;
-color:#aaa;
-white-space:nowrap;
+  padding:10px 16px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.08);
+  color:#aaa;
+  white-space:nowrap;
 }
 
 .tab.active{
-background:#fff;
-color:#000;
+  background:#fff;
+  color:#000;
 }
 
 .grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-padding:15px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
 }
 
 .card{
-background:#141421;
-border-radius:18px;
-padding:14px;
-position:relative;
-overflow:hidden;
+  position:relative;
+  border-radius:20px;
+  overflow:hidden;
+  padding:14px;
+  background:linear-gradient(145deg,#1a1a1f,#0a0a0d);
 }
 
 .card img{
-width:100%;
-height:140px;
-object-fit:contain;
-margin-bottom:10px;
+  width:100%;
+  height:120px;
+  object-fit:contain;
 }
 
 .title{
-font-weight:600;
-margin-bottom:4px;
+  font-weight:600;
+  margin-top:6px;
 }
 
-.sub{
-font-size:12px;
-color:#aaa;
-margin-bottom:8px;
+.subtitle{
+  font-size:12px;
+  color:#aaa;
 }
 
-select{
-width:100%;
-padding:8px;
-border-radius:10px;
-background:#1f1f30;
-border:none;
-color:#fff;
-margin-bottom:10px;
+.flavor{
+  margin-top:8px;
+  background:rgba(255,255,255,0.08);
+  padding:6px 10px;
+  border-radius:12px;
+  font-size:12px;
+  display:inline-block;
 }
 
 .bottom{
-display:flex;
-justify-content:space-between;
-align-items:center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:10px;
 }
 
 .price{
-font-size:18px;
-font-weight:700;
+  font-size:18px;
+  font-weight:600;
 }
 
 .btn{
-background:linear-gradient(45deg,#ff7a00,#ff3c00);
-border:none;
-color:#fff;
-padding:8px 12px;
-border-radius:10px;
+  background:linear-gradient(90deg,#ff7a00,#ff4d00);
+  padding:8px 14px;
+  border-radius:14px;
+  font-size:12px;
 }
 
-.nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:#111;
-display:flex;
-justify-content:space-around;
-padding:10px;
-}
-
-.nav div{
-color:#aaa;
-font-size:12px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="header">BLACK CLOUD</div>
-
-<input class="search" placeholder="Поиск вкуса...">
-
-<div class="tabs">
-<div class="tab active">Все</div>
-<div class="tab">Одноразки</div>
-<div class="tab">Жидкости</div>
-<div class="tab">POD</div>
-</div>
-
-<div class="grid">
-
-<!-- ELF BAR -->
-<div class="card">
-<img src="https://i.imgur.com/Z6X6vQx.png">
-<div class="title">ELF BAR 600</div>
-<div class="sub">600 затяжек • 20мг</div>
-<select>
-<option>Тропик</option>
-<option>Манго</option>
-<option>Клубника</option>
-</select>
-<div class="bottom">
-<div class="price">450 ₽</div>
-<button class="btn">+</button>
-</div>
-</div>
-
-<!-- VAPENGO -->
-<div class="card">
-<img src="https://i.imgur.com/jr6pf6F.png">
-<div class="title">Vapengo 6000</div>
-<div class="sub">6000 затяжек • 20мг</div>
-<select>
-<option>Арбуз лёд</option>
-<option>Черника</option>
-<option>Виноград</option>
-</select>
-<div class="bottom">
-<div class="price">1800 ₽</div>
-<button class="btn">+</button>
-</div>
-</div>
-
-<!-- BRUSKO -->
-<div class="card">
-<img src="https://i.imgur.com/e6X3kGf.png">
-<div class="title">BRUSKO SALT</div>
-<div class="sub">30мл • 20мг</div>
-<select>
-<option>Маракуйя</option>
-<option>Кола</option>
-<option>Мята</option>
-</select>
-<div class="bottom">
-<div class="price">450 ₽</div>
-<button class="btn">+</button>
-</div>
-</div>
-
-<!-- POD -->
-<div class="card">
-<img src="https://i.imgur.com/Kq8Y5vL.png">
-<div class="title">Caliburn GZ2</div>
-<div class="sub">750 mAh</div>
-<select>
-<option>750 mAh</option>
-</select>
-<div class="bottom">
-<div class="price">900 ₽</div>
-<button class="btn">+</button>
-</div>
-</div>
-
-<!-- MORE ITEMS -->
-<div class="card">
-<img src="https://i.imgur.com/Yo8QXJX.png">
-<div class="title">ELF BAR 5000</div>
-<div class="sub">5000 затяжек</div>
-<select>
-<option>Персик лёд</option>
-<option>Яблоко</option>
-</select>
-<div class="bottom">
-<div class="price">1300 ₽</div>
-<button class="btn">+</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://i.imgur.com/8Km9tLL.png">
-<div class="title">RF350</div>
-<div class="sub">POD система</div>
-<select>
-<option>1800 mAh</option>
-</select>
-<div class="bottom">
-<div class="price">700 ₽</div>
-<button class="btn">+</button>
-</div>
-</div>
-
-</div>
-
-<div class="nav">
-<div>🏠</div>
-<div>🔍</div>
-<div>🛒</div>
-</div>
-
-</body>
+</style></head><body><div class="container"><div class="search">🔍 Поиск вкуса...</div><div class="tabs">
+  <div class="tab active">Все</div>
+  <div class="tab">Одноразки</div>
+  <div class="tab">Жидкости</div>
+  <div class="tab">POD</div>
+  <div class="tab">Картриджи</div>
+</div><div class="grid"><!-- Одноразки --><div class="card">
+  <img src="https://i.imgur.com/2DhmtJ4.png">
+  <div class="title">Elf Bar 5000</div>
+  <div class="subtitle">5000 PUFF • 5%</div>
+  <div class="flavor">Черника</div>
+  <div class="bottom">
+    <div class="price">800 ₽</div>
+    <div class="btn">Добавить</div>
+  </div>
+</div><div class="card">
+  <img src="https://i.imgur.com/Vz81QkP.png">
+  <div class="title">HQD 4000</div>
+  <div class="subtitle">4000 PUFF • 5%</div>
+  <div class="flavor">Персик</div>
+  <div class="bottom">
+    <div class="price">600 ₽</div>
+    <div class="btn">Добавить</div>
+  </div>
+</div><!-- Жидкости --><div class="card">
+  <img src="https://i.imgur.com/4YQZ4vF.png">
+  <div class="title">Brusko 30ml</div>
+  <div class="subtitle">30 мл • 20 мг</div>
+  <div class="flavor">Малина лайм</div>
+  <div class="bottom">
+    <div class="price">230 ₽</div>
+    <div class="btn">Добавить</div>
+  </div>
+</div><div class="card">
+  <img src="https://i.imgur.com/ZXBtVw7.png">
+  <div class="title">Skala 30ml</div>
+  <div class="subtitle">30 мл • 20 мг</div>
+  <div class="flavor">Манго</div>
+  <div class="bottom">
+    <div class="price">650 ₽</div>
+    <div class="btn">Добавить</div>
+  </div>
+</div><!-- POD --><div class="card">
+  <img src="https://i.imgur.com/Y3ZQZ7L.png">
+  <div class="title">Vaporesso Luxe Q</div>
+  <div class="subtitle">POD система</div>
+  <div class="flavor">Red</div>
+  <div class="bottom">
+    <div class="price">2190 ₽</div>
+    <div class="btn">Добавить</div>
+  </div>
+</div><!-- Картриджи --><div class="card">
+  <img src="https://i.imgur.com/Z9K4V9R.png">
+  <div class="title">Картридж Luxe Q</div>
+  <div class="subtitle">0.8Ω</div>
+  <div class="flavor">2 шт</div>
+  <div class="bottom">
+    <div class="price">330 ₽</div>
+    <div class="btn">Добавить</div>
+  </div>
+</div></div></div></body>
 </html>
